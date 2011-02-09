@@ -1,0 +1,3 @@
+TIMER = 360 #in seconds
+RESOLUTION = (800, 600)
+FULLSCREEN = True

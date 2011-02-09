@@ -9,6 +9,7 @@ import pygame
 import random
 from ressourceLoader import RessourceLoader
 import time
+import constants
 
 class klt(object):
     '''
@@ -51,7 +52,7 @@ class klt(object):
 
         #timer stuff:
         self.timer_start = 0
-        self.timer_length = 360 #->6minutes
+        self.timer_length = constants.TIMER
         self.timer_remaining = self.timer_length
         
 
@@ -59,12 +60,15 @@ class klt(object):
         self.screen.fill((255,255,255))
         blackChar = pygame.Surface((10,32))
         blackChar.fill((0,0,0))
-        x = 50
+        x = 25
         i = 1
         for item in curline:
+	    if x > constants.RESOLUTION[0]:
+		self.running = False
+		print "too small x-resolution!!"
             if i < self.currentChar:
-                self.screen.blit(blackChar, (x, 768/2))
-            self.screen.blit(item.image, (x, 768/2))
+                self.screen.blit(blackChar, (x, constants.RESOLUTION[1]/2))
+            self.screen.blit(item.image, (x, constants.RESOLUTION[1]/2))
             x += 25
             i += 1
             
@@ -78,7 +82,7 @@ class klt(object):
         self.screen.blit(WroCsurf, (100,140))
         self.screen.blit(remainsurf, (100,160))
         
-        self.screen.blit(topicsurf, (700,150))
+        self.screen.blit(topicsurf, (constants.RESOLUTION[0]-topicsurf.get_width()-100,150))
         
     def handleInput(self):
         for event in pygame.event.get():
