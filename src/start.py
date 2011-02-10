@@ -10,7 +10,7 @@ import constants
 
 if __name__ == '__main__':
     if constants.FULLSCREEN:
-    	screen = pygame.display.set_mode(constants.RESOLUTION, pygame.FULLSCREEN)
+        screen = pygame.display.set_mode(constants.RESOLUTION, pygame.FULLSCREEN)
     else:
-	screen = pygame.display.set_mode(constants.RESOLUTION)
+        screen = pygame.display.set_mode(constants.RESOLUTION)
     klt.klt(screen).start()
