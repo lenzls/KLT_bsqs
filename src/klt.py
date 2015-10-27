@@ -1,3 +1,24 @@
+# -*- coding: utf-8 -*-
+#
+# KLT_bsqs
+# Programm zur Vorbereitung auf den Konzentrationsleistungstest B2
+#
+# Copyright 2011 Simon Lenz
+#
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 '''
 Created on 07.02.2011
 
@@ -23,14 +44,14 @@ class klt(object):
         '''
         pygame.init()
         self.screen = screen
-        
+
         self.gameRunning = False
-    
+
         self.currentChar = 0
         self.corC = 0
         self.wroC = 0
         self.allC = 0
-        
+
         self.font = RessourceLoader.load_font('courier_new.ttf',15)
         self.topicFont = RessourceLoader.load_font('courier_new.ttf',35)
 
@@ -54,7 +75,7 @@ class klt(object):
         self.timer_start = 0
         self.timer_length = constants.TIMER
         self.timer_remaining = self.timer_length
-        
+
 
     def render(self, curline):
         self.screen.fill((255,255,255))
@@ -71,13 +92,13 @@ class klt(object):
             self.screen.blit(item.image, (x, constants.RESOLUTION[1]/2))
             x += 25
             i += 1
-            
+
         topicsurf = self.topicFont.render("KLT-rlp_2011", True, [0,0,0])
         allCsurf = self.font.render("Anzahl Symbole: "+str(self.allC), True, [0,0,0])
         CorCsurf = self.font.render("Korrekt: "+str(self.corC), True, [0,0,0])
         WroCsurf = self.font.render("Falsch: "+str(self.wroC), True, [0,0,0])
         remainsurf = self.font.render("Verbleibende Zeit [sec]: " +str(self.timer_remaining), True, [0,0,0])
-        try: 
+        try:
             percCor = (self.corC*100//self.allC)
         except ZeroDivisionError:
             percCor = 0
@@ -93,9 +114,9 @@ class klt(object):
         self.screen.blit(remainsurf, (100,160))
         self.screen.blit(percCorsurf, (100,200))
         self.screen.blit(corProMinsurf, (100,220))
-        
+
         self.screen.blit(topicsurf, (constants.RESOLUTION[0]-topicsurf.get_width()-100,150))
-        
+
     def handleInput(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -103,13 +124,13 @@ class klt(object):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
-                
+
                 elif event.key == pygame.K_SPACE:
                     if self.gameRunning:
                         self.stopRun()
                     else:
                         self.startRun()
-                        
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 #Linke Maustaste
                 if event.button == 1 and self.gameRunning:
@@ -117,25 +138,25 @@ class klt(object):
                 #Rechte Maustaste
                 elif event.button == 3 and self.gameRunning:
                     self.checkSymbol(False)
-    
+
     def checkSymbol(self, pressedValue):
         if self.currentLine[self.currentChar-1].valid == pressedValue:
             self.answCor()
         elif self.currentLine[self.currentChar-1].valid != pressedValue:
             self.answWro()
         else:
-            print "Fehler!!"    
-    
+            print "Fehler!!"
+
     def answCor(self):
         self.corC += 1
         self.allC += 1
         self.currentChar += 1
-    
+
     def answWro(self):
         self.wroC += 1
         self.allC += 1
         self.currentChar +=1
-    
+
     def startRun(self):
         self.corC = 0
         self.wroC = 0
@@ -143,13 +164,13 @@ class klt(object):
         self.gameRunning = True
         self.score = 0
         self.currentChar = 1
-        
+
         self.timer_start = time.time()
-        
+
     def stopRun(self):
         self.gameRunning = False
         self.currentChar = 0
-        
+
         self.timer_start = 0
 
     def checkTimer(self):
@@ -157,26 +178,26 @@ class klt(object):
         if time.time() - self.timer_start >= self.timer_length:
             print "zeit ist um"
             self.stopRun()
-            
+
     def generateLine(self):
         self.currentLine = []
         for x in range(0,30):
             self.currentLine.append(self.symbolList[random.randrange(0,len(self.symbolList))])
-            
-    def start(self): 
+
+    def start(self):
         self.running = True
 
         self.generateLine()
-        
+
 
         while self.running:
             self.handleInput()
             self.render(self.currentLine)
-            
+
             if self.gameRunning:
                 if self.currentChar > len(self.currentLine):
                     self.generateLine()
                     self.currentChar = 1
-                
+
                 self.checkTimer()
-            pygame.display.update()        
+            pygame.display.update()
