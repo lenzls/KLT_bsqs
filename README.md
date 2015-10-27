@@ -11,6 +11,12 @@ Da man durch die Applikation schon mit einer relativ ähnlichen Situation konfro
 ##Version
 version 0.1
 
+##History
+### 0.2.0 ###
+- Lizenz hinzugefügt
+### 0.1.0 ###
+- erste lauffaehige Version
+- alle essentiellen Features enthalte
 
 ##Dependencies
  * python2.7
