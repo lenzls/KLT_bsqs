@@ -1,5 +1,6 @@
 # KLT_bsqs
 ## Programm zur Vorbereitung auf den Konzentrationsleistungstest B2
+####(den mit den `b`s und `q`s)
 
 Dieses Programm dient ausschließlich zur Vorbereitung auf den Konzentrationstest im Rahmen des EAV.
 Dabei erhebe ich keinerlei Ansprüche auf Vollständigkeit, Korrektheit oder Authentizität.
